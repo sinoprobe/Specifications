@@ -1,9 +1,10 @@
 # Some Specifications digest,规范摘要
-```all rights belong to original person or organizations,if not be authorized,please let us konw by email:tnsm#163.com,we should delete ASAP.```
+```
+All rights OF THE CONTENTS are belong to the original person or organizations,if not be authorized,please let us konw by email:tnsm@163.com,we should delete immediately.
+```
 
-================================================
- - Sig Mesh
+ - [Sig Mesh](./sig_mesh)
 
 
 =================================================
->welcome to SinoProbe data collection system.
+> Welcome to [SinoProbe data collection system](https://www.sinoprobe.cn).
