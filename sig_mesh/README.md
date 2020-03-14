@@ -247,7 +247,7 @@ Messages are dispatched within models based on opcodes and element addresses.
 
 An element is not allowed to contain multiple instances of models that use the same message in the same way (for example, receive an “On” message).
 
-成员不允许包含多个模型的实例，在某种场合使用同样的消息（比如，接收“On”消息）。
+成员不允许包含多个在相同场合使用同样的消息的模型的实例。（比如，都接收“On”消息）。
 
 When multiple models within the same element use the same message, the models are said to “overlap.” To implement multiple instances of overlapping models within a single node (for example, to control multiple light fixtures that can be turned on and off), the node is required to contain multiple elements.
 
@@ -272,11 +272,18 @@ A virtual address is a multicast address and can represent multiple elements on 
 A group address is a multicast address and can represent multiple elements on one or more nodes. There are 16384 group addresses per mesh network. There are a set of fixed group addresses that are used to address a subset of all primary elements of nodes based on the functionality of those nodes. All other group addresses are known as dynamically assigned group addresses. There are 256 fixed group addresses and 16128 dynamically assigned group addresses.
 #### 2.3.6 Models｜（应用/场景/功能）模型
 A model defines the basic functionality of a node. A node may include multiple models. A model defines the required states (as described in Section 2.3.1), the messages that act upon those states (as described in Section 2.3.3), and any associated behavior.
+
+模型用来定义节点的基本功能。一个节点有可能包括多个模型。一个模型定义要求的状态组，消息作用于这些状态组和相关行为。
+
 A mesh application is specified using a client-server architecture communicating with a publish-subscribe paradigm. Due to the nature of mesh networks and the recognition that the configuration of behavior isperformed by a Configuration Client, an application is not defined in a single end-to-end specification such as a profile. Instead, an application is defined in a client model, a server model, and a control model.
+
+一个mesh应用规范为采用客户端-服务端的架构和发布-订阅通讯的方式，
+
 This specification defines three types of model: server models, client models, and control models:
-• Server model: A server model is composed of one or more states spanning one or more elements. The server model defines a set of mandatory messages that it can transmit or receive, the behavior required of the element when it transmits and receives such messages, and any additional behavior that occurs after messages are transmitted or received.
-• Client model: A client model defines a set of messages (both mandatory and optional) that a client uses to request, change, or consume corresponding server states, as defined by a server model. The client model does not have state.
-• Control model: A control model may contain client model functionality to communicate with other server models and server model functionality to communicate with other client models. A control model may also contain control logic, which is a set of rules and behaviors that coordinate the interactions between other models that the control model connects to.
+ - Server model: A server model is composed of one or more states spanning one or more elements. The server model defines a set of mandatory messages that it can transmit or receive, the behavior required of the element when it transmits and receives such messages, and any additional behavior that occurs after messages are transmitted or received.
+ - Client model: A client model defines a set of messages (both mandatory and optional) that a client uses to request, change, or consume corresponding server states, as defined by a server model. The client model does not have state.
+ - Control model: A control model may contain client model functionality to communicate with other server models and server model functionality to communicate with other client models. A control model may also contain control logic, which is a set of rules and behaviors that coordinate the interactions between other models that the control model connects to.
+ 
 A single device may include server, client, and control models.
 For example, Figure 2.2 shows the element-model structure for a device that implements a server model (Device C) with a state and supporting messages R, S, T, X, Y, Z; and two devices that implement a client model, with Device A supporting messages X, Y, and Z and Device B supporting messages R, S, T, and Z.
 
