@@ -92,23 +92,48 @@ The mesh network operation defined by this specification is designed to:
   - 及时传递信息
   - 在一个或多个设备移除或者停用的情况下网络保持可用，以及
   - 具有内置的前向兼容性，以支持未来的mesh版本
+
 This specification defines a managed-flood-based mesh network, which uses broadcast channels to transmit messages so that other nodes can receive messages and relay these messages; thus extending the range of the original message. Any device in a managed-flood mesh network can send a message at any time as long as there is a sufficient density of devices that are listening and relaying messages. Enhancements to add routing functionality and define a routing-based mesh network may be considered for a future revision of this specification.
+
+本规范定义了一个基于可管理泛洪的自组网路，它应用广播通道传输消息，其他网络节点就能够接受或中继消息；这样就使得原始消息的范围得到扩展，基于可管理泛洪的自组网路中的任意一个设备在任何时候可以发消息，有足够的密度的设备在监听和中继消息，渐入路由功能以及定义基于路由放入自组网络是本规范未来需要增强的部分。
+
 There are a number of methods used by this specification to restrict the unlimited relaying of messages in a managed-flood mesh network. The two main methods used are the network message cache method and the time to live method.
 
+
+本规范有很多方法限制消息的无限中继转发，最主要的两个方法是网络消息缓存方法和消息存活时间方法。
+
 The network message cache is designed to prevent devices from relaying previously received messages by adding all messages to a cached list. When a message is received, it is checked against the list and ignored if already present. If not already received, then it is added to the cache so that it can be ignored in the future. To prevent this list from becoming too long, the number of messages that are cached is limited by implementation.
+
+消息缓存通过转发预先收保存在缓存到队列中的所有消息，当接收到已经在缓存中的消息时，就会被忽略。为了防止这个缓存队列过大，在实现时要限制队列的消息数量。
+
 Each message includes a Time to Live (TTL) value that limits the number of times a message can be relayed. Each time a message is received and then relayed (up to a maximum of 126 times) by a device, the TTL value is decremented by 1.
 
-#### 2.2.1 Network and subnets
+每个消息都有一个存活期限TTL,TTL数值限定了一个消息能够被转发的次数，消息每次被设备收发一次（最大126次），TTL数值减少1.
+
+#### 2.2.1 Network and subnets｜网络与子网
 A mesh network consists of nodes sharing four common resources:
  - network addresses used to identify source and destination of messages (see Section 3.4.2);
  - network keys used to secure and authenticate messages at the network layer (see Section 3.8.6.3);
  - application keys used to secure and authenticate messages at the access layer (see Section 3.8.6.2); and
  - an IV Index used to extend the lifetime of the network (see Section 3.8.4).
+
+ 由节点组成的自组网络要交互四个资源:
+ - 网络地址用来区分消息的来源与目的地
+ - 网络密钥用来在网络层安全认证消息
+ - 应用密钥用来在访问层安全认证消息
+ - IV序号用来扩展网络
+
 A network can have one or more subnets that facilitate ”area” isolation (e.g., isolated hotel room subnets within a hotel network). A subnet is a group of nodes that can communicate with each other at a network layer because they share a network key. A node may belong to one or more subnets by knowing one or more network keys. At the time of provisioning, a device is provisioned to one subnet and may be added to more subnets using the Configuration Model.
+
+一个网络有一个或者多个子网，实现区域隔离（比如，在一个酒店的网络中，隔离出客房子网）。子网就是节点的分组，这些节点在网络层相互通讯，因为他们有共同的网络密钥，一个节点可能属于一个或者多个子网带有一个或者多个网络密钥，在组网时，一个设备加入到一个子网，从而**通过使用配置模型**可能被添加到多个子网。
 
 There is one special subnet called the primary subnet, which is based on the primary NetKey (see Section 3.8.6.4). Nodes on the primary subnet participate in the IV Update procedure (see Section 3.10.5), and propagate IV updates to other subnets, while nodes on other subnets only propagate the IV Index updates to those subnets.
 
+首个子网是个特殊的子网，它基于初始网络密钥，在初始子网的节点要参与IV更新过程，并把更新的IV传播给其他子网，其他子网的节点只在其子网内传播IV序号更新。
+
 The network resources are managed by a node that implements the Configuration Client model, known as the Configuration Client, (typically a smart phone or other mobile computing device) and are allocated to nodes at the time of configuration (see Section 5) using the Configuration Server model (see Section 4.4.1). In particular, a Provisioner manages allocation of addresses to make sure no duplicate unicast addresses are allocated, whereas a Configuration Client generates and distributes network andapplication keys and makes sure that devices that need to communicate with each other share proper keys for both network and access layers. The Configuration Client also knows device keys (see Section 3.8.6.1), which are used to secure communication with each individual node, including distributing updated network and application keys.
+
+网络资源被实现了配置客户模型的节点管理，称之为配置客户端（或叫网关，每个mesh只能有一个网关，通常是一个智能手机或者其他移动计算机设备），配置那些运行配置服务模型的节点，通常网关管理地址分配，确保unicast地址不重复，还有为网络层和访问层层生成和分发网络应用密钥，网关也知道与之安全通讯的各独立节点的设备密钥，包括分发更新网络和应用密钥。
 
 ## II Mesh Model 模型
 

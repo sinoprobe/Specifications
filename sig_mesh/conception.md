@@ -14,10 +14,10 @@ Flooding means that messages take multiple paths to reach their destination. The
 Bluetooth mesh networking leverages the strengths of the flooding approach and optimises its operation such that it is both reliable and efficient. A number of features of design of Bluetooth mesh networking, contribute to the efficiency of managed flooding:
 
 ## Heartbeats
-– Heartbeat messages are transmitted by nodes periodically. A heartbeat message indicates to other nodes in the network that the node sending the heartbeat is still active. In addition, heartbeat messages contain data which allows receiving nodes to determine how far away the sender is, in terms of the number of hops required to reach it. This knowledge can be exploited with the TTL field.
+ – Heartbeat messages are transmitted by nodes periodically. A heartbeat message indicates to other nodes in the network that the node sending the heartbeat is still active. In addition, heartbeat messages contain data which allows receiving nodes to determine how far away the sender is, in terms of the number of hops required to reach it. This knowledge can be exploited with the TTL field.
 
 ## TTL
-– TTL is a field which all Bluetooth mesh PDUs include. It controls the maximum number of hops, over which a message will be relayed. Setting the TTL allows nodes to exercise control over relaying and conserve energy, by ensuring messages are not relayed further than is required. Heartbeat messages allow nodes to determine what the optimum TTL value should be for each message published.
+ – TTL is a field which all Bluetooth mesh PDUs include. It controls the maximum number of hops, over which a message will be relayed. Setting the TTL allows nodes to exercise control over relaying and conserve energy, by ensuring messages are not relayed further than is required. Heartbeat messages allow nodes to determine what the optimum TTL value should be for each message published.
 
 ## Message Cache
 – a Network Message Cache must be implemented by all nodes. The cache contains all recently seen messages and if a message is found to be in the cache, indicating the node has seen and processed it before, it is immediately discarded.
