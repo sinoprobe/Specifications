@@ -50,7 +50,7 @@ The Model layer defines models that are used to standardize the operation of typ
 #### 2.1.2 Foundation Model layer｜基本模型层
 The Foundation Model layer defines the states, messages, and models required to configure and manage a mesh network.
 
-基本模型层定义的状态，消息以及模型用于配置和管理一个mesh网络
+基本模型层定义的数据项集合，消息以及模型用于配置和管理一个mesh网络
 
 #### 2.1.3 Access layer|访问层
 The access layer defines how higher layer applications can use the upper transport layer. It defines the format of the application data; it defines and controls the application data encryption and decryption performed in the upper transport layer; and it checks whether the incoming application data has been received in the context of the right network and application keys before forwarding it to the higher layer.
@@ -174,35 +174,35 @@ The features within this specification enable many devices in the mesh network t
 ### 2.3 Architectural concepts｜网络架构的概念
 The mesh networking architecture uses several different concepts: states, messages, bindings, elements, addressing, models, publish-subscribe, mesh keys, and associations.
 
-mesh 自组网架构有一些不同的概念：状态、消息、绑定、成员、地址分配、模型、发布-订阅、自组网密钥以及关联等
+mesh 自组网架构有一些不同的概念：数据项集合、消息、绑定、成员、地址分配、模型、发布-订阅、自组网密钥以及关联等
 
-#### 2.3.1 States｜状态组
+#### 2.3.1 States｜数据项集合
 A state is a value representing a condition of an element.
 
-状态是成员的值表示
+数据项集合代表了成员的数据集合
 
 An element exposing a state is referred to as a server. For example, the simplest server is a Generic OnOff Server, representing that it is either on or off.
 
-成员用服务的方式暴露一个状态，比如，最简单的服务是通用开关服务，表示它的值是开或关
+成员用服务的方式暴露一个数据项集合，比如，最简单的服务是通用开关服务，表示它的值是开或关
 
 An element accessing a state is referred to as a client. For example, the simplest client is a Generic OnOff Client (a binary switch) that is able to control a Generic OnOff Server via messages defined by the Generic OnOff Model.
 
-一个成员通过客户端的方式访问状态，比如，最简单的客户端是通用开关客户端（二进制开关）就可以通过通用开关模型定义的消息控制通用开关服务。
+一个成员通过客户端的方式访问数据项集合，比如，最简单的客户端是通用开关客户端（二进制开关）就可以通过通用开关模型定义的消息控制通用开关服务。
 
 States that are composed of two of more values are known as composite states. For example, a color-changing lamp can control color hue separately from color saturation and brightness.
 
-状态组包括两个或更多数值组合，比如调色灯泡能够独立于亮度饱和度单独控制色度。
+数据项集合包括两个或更多数据项组合，比如调色灯泡能够独立于亮度饱和度单独控制色度。
 
 
-#### 2.3.2 Bound states｜绑定状态组
+#### 2.3.2 Bound states｜绑定数据项集合
 When a state is bound to another state, a change in one results in a change in the other. Bound states may be from different models in one or more elements. For example, a common type of binding is between a Level state and an OnOff state: changing the Level to 0 changes the bound OnOff state to Off and changing the Level to a non-zero value changes the bound OnOff state to On.
 
-当一个状态和另一个状态绑定，一个变化会影响另一个，绑定的状态组可以来自一个或多个成员的不同模型。比如，一个公共的绑定类型是等级状态和开关状态：等级调到0时，开关状态要变为off，再调到非0值时，开关状态要变为on。
+当一个数据项集合和另一个数据项集合绑定，一个变化会影响另一个，绑定的数据项集合可以来自一个或多个成员的不同模型。比如，一个公共的绑定类型是等级数据项集合和开关数据项集合：等级调到0时，开关数据项要变为off，再调到非0值时，开关数据项要变为on。
 
 #### 2.3.3 Messages｜消息
 All communication within a mesh network is accomplished by sending messages. Messages operate on states. For each state, there is a defined set of messages that a server supports and a client may use to request a value of a state or to change a state. A server may also transmit unsolicited messages carrying information about states and/or changing states.
 
-mesh网络的所以通讯均通过发送消息。消息操作状态组。对于每个状态，就是定义一套服务支撑的消息，客户端用它请求状态量或者改变状态，服务也可以自发转送带有状态信息或者状态改变的消息。
+mesh网络的所以通讯均通过发送消息。消息操作数据项集合。对于每个数据项集合，就是定义一套服务支撑的消息，客户端用它请求数据项量或者改变数据项，服务也可以自发转送带有数据项信息或者数据项改变的消息。
 
 A message is defined as having an opcode, associated parameters, and behavior. An opcode may be a single octet (for special messages that require maximum possible payload for parameters), 2 octets (for standard messages), or 3 octets (for vendor-specific messages).
 
@@ -259,7 +259,7 @@ For example, a light fixture may have two lamps, each implementing an instance o
 
 In another example, a dual-socket power strip contains two independent energy measurement sensors that can measure power consumed by an appliance connected to a socket. This would require that the node have two Sensor Data states, each in a separate element. The first element, the primary element, would be identified using the unicast address for the node and would include a state for the first energy sensor as well as states representing the configuration of the node. The second element, a secondary element, would be identified using a unicast element address and would include the state for the second energy sensor.
 
-再例如，双口插座包含两个独立的电量传感器用来测量每个插座的耗电量，这就要求节点包含两个传感器数据状态组，每个对应不同成员，第一个成员，即首员，用节点的unicast地址标识，包括第一个传感器的状态，以及作为节点配置的状态组显示。第二个成员作为次员通过成员地址识别，并包括第二个电量传感器的状态量
+再例如，双口插座包含两个独立的电量传感器用来测量每个插座的耗电量，这就要求节点包含两个传感器数据项集合，每个对应不同成员，第一个成员，即首员，用节点的unicast地址标识，包括第一个传感器的数据项，以及作为节点配置的数据项集合显示。第二个成员作为次员通过成员地址识别，并包括第二个电量传感器的数据项量
 
 Each element has a GATT Bluetooth Namespace Descriptor [5] value that helps identify which part of the node this element represents. These namespace descriptor values use the same definitions as GATT. For example, the elements of the temperature sensor would use the values “inside” and “outside.”
 
@@ -267,39 +267,79 @@ Each element has a GATT Bluetooth Namespace Descriptor [5] value that helps iden
 
 #### 2.3.5 Addresses｜地址
 An address may be a unicast address, a virtual address, or a group address. There is also a special value to represent an unassigned address that is not used in messages.
+
+地址可以是unicast地址，虚拟地址，或者群组地址。也有特定的值表示为未分配的地址（保留地址），不能在消息中使用
+
 A unicast address is allocated to an element and always represents a single element of a node. There are 32767 unicast addresses per mesh network.
-A virtual address is a multicast address and can represent multiple elements on one or more nodes. Each virtual address logically represents a Label UUID, which is a 128-bit value that does not have to be managed centrally. Each message sent to a Label UUID includes the full Label UUID in the message integrity check value that is used to authenticate the message. To reduce the overhead of checking every known Label UUID, a hash of the Label UUID is used. There are 16384 hash values, each of which codifies a set of virtual addresses. While there are only 16384 hash values used in a virtual address, each hash value can represent millions of possible Label UUIDs; therefore, the number of virtual addresses is considered very large.
+
+unicast地址指向成员，总是代表节点中的一个成员。每个，mesh网络共有32767个unicast地址。
+
+A virtual address is a multicast address and can represent multiple elements on one or more nodes. Each virtual address logically represents a Label UUID, which is a 128-bit value that does not have to be managed centrally. Each message sent to a Label UUID includes the full Label UUID in the message integrity check value that is used to authenticate the message. To reduce the overhead of checking every known Label UUID, a hash of the Label UUID is used. There are 16384 hash values, each of which codifies a set of virtual addresses. While there are only 16384 hash values used in a virtual address, each hash value can represent millions of possible Label UUIDs; therefore, the number of virtual addresses is considered very large
+
+虚拟地址是多指向地址，能代表一个或或多个节点中的多个成员，每个虚拟地址逻辑上代表一个UUID标签，它是一个不必集中管理的128位的值（16字节），发给UUID标签的每个消息包括完整的标签UUID的完整性校验，用于消息验证，采用标签UUID的哈希值校验已知的标签UUID，以降低开销。共有16384个哈希值集合，每个代表一个虚拟地址的集合，尽管只有16384个哈希值用于虚拟地址，但是每个哈希值能代表上百万个可能的标签UUID, 所以，虚拟地址的数量可以看作非常大。
+
 A group address is a multicast address and can represent multiple elements on one or more nodes. There are 16384 group addresses per mesh network. There are a set of fixed group addresses that are used to address a subset of all primary elements of nodes based on the functionality of those nodes. All other group addresses are known as dynamically assigned group addresses. There are 256 fixed group addresses and 16128 dynamically assigned group addresses.
+
+群组地址是个多指向地址，能代表一个或或多个节点中的多个成员，每个mesh网络有16384个群组地址，有一固定群组地址集合用于按功能划分的所有节点的首员组成的子网，其他群组地址动态分配。共有256个固定群组地址和16128个动态分配的群组地址。
+
 #### 2.3.6 Models｜（应用/场景/功能）模型
 A model defines the basic functionality of a node. A node may include multiple models. A model defines the required states (as described in Section 2.3.1), the messages that act upon those states (as described in Section 2.3.3), and any associated behavior.
 
-模型用来定义节点的基本功能。一个节点有可能包括多个模型。一个模型定义要求的状态组，消息作用于这些状态组和相关行为。
+模型用来定义节点的基本功能。一个节点有可能包括多个模型。一个模型定义要求的数据项集合，消息作用于这些数据项集合和相关行为。
 
 A mesh application is specified using a client-server architecture communicating with a publish-subscribe paradigm. Due to the nature of mesh networks and the recognition that the configuration of behavior isperformed by a Configuration Client, an application is not defined in a single end-to-end specification such as a profile. Instead, an application is defined in a client model, a server model, and a control model.
 
-一个mesh应用规范为采用客户端-服务端的架构和发布-订阅通讯的方式，
+一个mesh应用规范为采用客户端-服务端的架构和发布-订阅通讯的方式，按照mesh网络生态，可以认为通过配置客户端执行配置行为，应用不可定义为简单的端到端的规范。相反，**应用要定义为客户端模型，服务端模型以及控制模型**
 
 This specification defines three types of model: server models, client models, and control models:
+
+规范定义了三个模型，**应用要定义为客户端模型，服务端模型以及控制模型**
+
  - Server model: A server model is composed of one or more states spanning one or more elements. The server model defines a set of mandatory messages that it can transmit or receive, the behavior required of the element when it transmits and receives such messages, and any additional behavior that occurs after messages are transmitted or received.
+
+ - 服务端模型：跨越一个或多个成员的一个或多个数据项集合组成服务端模型。服务端模型定义一套法定的消息集合用于发送和接收，当成员收到这些消息时要求相应的动作，在消息发送或接受之后，这些附加的动作就会发生。（消息驱动）
+
  - Client model: A client model defines a set of messages (both mandatory and optional) that a client uses to request, change, or consume corresponding server states, as defined by a server model. The client model does not have state.
+
+ - 客户端模型：客户端模型定义一套消息集合（包含法定和可选两种），用于客户端请求，改变或接受服务端定义的数据项集合，客户端没有数据项
+
  - Control model: A control model may contain client model functionality to communicate with other server models and server model functionality to communicate with other client models. A control model may also contain control logic, which is a set of rules and behaviors that coordinate the interactions between other models that the control model connects to.
- 
+
+  - 控制模型：控制模型可能包含和其他服务端通讯的客户端模型的功能，以及和其他客户端通讯的服务端模型的功能，控制模型也包含控制逻辑，是与连接到控制模型的其他模型交互的规则和动作的集合
+
 A single device may include server, client, and control models.
+
+单一设备可以包括服务端模型、客户端模型以及控制模型。
+
 For example, Figure 2.2 shows the element-model structure for a device that implements a server model (Device C) with a state and supporting messages R, S, T, X, Y, Z; and two devices that implement a client model, with Device A supporting messages X, Y, and Z and Device B supporting messages R, S, T, and Z.
+
+举个例子，下图的是一个实现了服务端模型的成员模型结构的设备C（Device C)，有一个数据项，支持消息R, S, T, X, Y, Z;另外两个实现客户端模型的设备，设备A(Device A ),支持消息X, Y, Z，设备B(Device B),支持消息R, S, T, Z
 
 ![Figure 2.2: Client-server model communication](https://sinoprobe.dscloud.me:8443/doc/images/Client-server_model_communication.png)
 
 In another example, Figure 2.3 shows the element-model structure of a device that implements a control model. Device C can communicate with server models as a client (supporting messages X, Y, and Z and messages R, S, and T respectively) and can communicate with client models as a server (supporting messages A, B, and C).
 
+再举一个例子，下图的是一个实现了控制模型的成员模型结构的设备C，设备C通过客户端模型与服务端模型通讯（支持消息X,Y,Z和消息R,S,T）,又作为服务端与客户端模型通讯（支持消息A,B,C）,无所不能的样子
+
+
 ![Figure 2.3: Control model communication](https://sinoprobe.dscloud.me:8443/doc/images/Control_model_communication.png)
 
 A lighting controller is an example of an implementation of a control model. The lighting controller needs to function as a client to sensors (to measure occupancy and/or ambient light) and to light sources (such as lamps or other luminaires). The lighting controller also would function as a server to a settings client (such as a smartphone application that configures its parameters). Such a lighting controller may be included within a sensor or light source or it may a separate device.
+
+照明控制器是一个实现控制模型的例子，照明控制器需要传感器的客户端（测量占用率和/或环境光）和光源的客户端（比如灯泡或其他发光体）的功能，照明控制器又要作为服务端为设置客户端（比如智能手机设置照明参数）提供服务的功能，所以，照明控制器用包括传感器及光源或者他们是个独立的设备。
+
 Models can define functions of a device as a network node, such as key management, address assignment, and relaying of messages. Models also define physical behaviors of a device built around a network node, such as power control, lighting control, and sensor data collection. There may be nodes implementing only network-related functions, such as Relay nodes or Proxy nodes, while the majority of nodes are able to interact with the physical world by means of controlling electrical power, controlling light emissions, or sensing environmental data.
+
+
+
 A message can be used by multiple different models. Message behavior is the same in each model, enabling a common understanding among client, server, and control models because the behavior is consistent regardless of the models that send and process the message.
+
+
+
 Model specifications are designed to be very small and self-contained. A model can, at the specification definition time, require other models that must also be instantiated within the same node. This is called extending, which means a model can extend other models.
 
 Models that do not extend other models are referred to as root models.
-Model specifications are immutable: it is not possible to remove or add behavior to a model, whether the desired behavior is optional behavior or mandatory. Models are not versioned and have no feature bits. If additional behavior is required in a model, then a new extended model is defined that exposes the required behavior and can be implemented alongside the original model.
+Model specifications are immutable（不可改变）: it is not possible to remove or add behavior to a model, whether the desired behavior is optional behavior or mandatory. Models are not versioned and have no feature bits. If additional behavior is required in a model, then a new extended model is defined that exposes the required behavior and can be implemented alongside the original model.
 Therefore, knowledge of the models supported by an element determines the exact behavior exposed by that element.
 Models may be defined and adopted by Bluetooth SIG and may be defined by vendors. Models defined by Bluetooth SIG are known as SIG adopted models, and models defined by vendors are known as vendor models. Models are identified by unique identifiers, which can be either 16 bits, for SIG adopted models, or 32 bits, for vendor models.
 For example, Figure 2.4 shows the element-model structure of a device that implements a root model with two bound states and a set of messages operating on each state. The root model is within the primary element and is extended by the extended model that adds another state on a secondary element. Messages are not capable of differentiating among multiple instances of the same state on the same element. Therefore, when more than one instance of a given state is present on a device, each instance is required to be in a separate element. In this example, the second instance of State X is required to be located on the second element because it is the same type of a state and thus has the same types of messages serving it.
